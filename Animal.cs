@@ -41,21 +41,6 @@ namespace Ferma
             tip = A.tip;
             nrMatricol = A.nrMatricol;
         }
-        public void citireTastatura()
-        {
-            Console.WriteLine("Introduceti numarul matricol:");
-            nrMatricol = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Introduceti numele:");
-            nume = Console.ReadLine();
-            Console.WriteLine("Introduceti varsta:");
-            varsta = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Introduceti greutatea:");
-            greutate = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Introduceti tipul(M/F):");
-            tip = Console.ReadLine();
-            Console.WriteLine("Introduceti culoarea:");
-            culoare = Console.ReadLine();
-        }
         public void CitireLinie(string linieFisier)
         {
             var dateFisier = linieFisier.Split(",");
@@ -66,22 +51,16 @@ namespace Ferma
             tip = dateFisier[4];
             culoare = dateFisier[5];
         }
-        public string AfisareAnimal()
-        {
-            string info=string.Format($"Animalul cu numarul matricol {this.nrMatricol} are numele {this.nume}" +
-                $",culoarea {this.culoare},greutatea de {this.greutate} kg,varsta de {this.varsta} ani si are genul {this.tip}");
-            return info;
-        }
         public string ConversieLaSir_PentruFisier()
         {
             string animalFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}",
                 ",",
                 this.nrMatricol.ToString(),
                 this.nume,
-                this.culoare,
-                this.greutate.ToString(),
                 this.varsta.ToString(),
-                this.tip
+                this.greutate.ToString(),
+                this.tip,
+                this.culoare
                );
             return animalFisier;
         }
@@ -116,13 +95,101 @@ namespace Ferma
             gestanta = C.gestanta;
             nrVitei = C.nrVitei;
         }
+        public void CitireLinieCow(string linie)
+        {
+            this.CitireLinie(linie);
+            var dateFisier = linie.Split(",");
+            litriiLapte = Convert.ToDouble(dateFisier[6]);
+            gestanta = Convert.ToBoolean(dateFisier[7]);
+            nrVitei = Convert.ToInt32(dateFisier[8]);
+        }
+        public string ConversieLaSirPentruFisierCow()
+        {
+            string CowFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}",
+                ",",
+                this.ConversieLaSir_PentruFisier(),
+                litriiLapte.ToString(),
+                gestanta.ToString(),
+                nrVitei.ToString());
+            return CowFisier;
+            
+        }
     }
     class Horse:Animal
     {
+        double vitezaAlergare { get; set; }
+        bool poctovit { get; set; }
+        public Horse() : base()
+        {
+            vitezaAlergare = 0;
+            poctovit = false;
+        }
+        public Horse(string nume = "nedefinit", double greutate = 0, double varsta = 0, string culoare = "nedfinit", string tip = "M", int nrMatricol = 0,double vitezaAlergare=0,bool poctovit=false): base(nume, greutate, varsta, culoare, tip, nrMatricol)
+        {
+            this.vitezaAlergare = vitezaAlergare;
+            this.poctovit = poctovit;
+        }
+        public Horse(Horse H) : base(H.nume, H.greutate, H.varsta, H.culoare, H.tip)
+        {
+            vitezaAlergare = H.vitezaAlergare;
+            poctovit = H.poctovit;
+        }
+        public void CitireLinieHorse(string linie)
+        {
+            this.CitireLinie(linie);
+            var dateFisier = linie.Split(",");
+            vitezaAlergare = Convert.ToDouble(dateFisier[6]);
+            poctovit = Convert.ToBoolean(dateFisier[7]);
+        }
+        public string ConversieLaSirPentruFisierHorse()
+        {
+            string HorseFisier = string.Format("{1}{0}{2}{0}{3}",
+                ",",
+                this.ConversieLaSir_PentruFisier(),
+                vitezaAlergare.ToString(),
+                poctovit.ToString());
+            return HorseFisier;
+
+        }
+
+
 
     }
     class Hen:Animal
     {
+        double nrOuaPerLuna { get; set; }
+        bool closca { get; set; }
+        public Hen() : base()
+        {
+            nrOuaPerLuna = 0;
+            closca = false;
+        }
+        public Hen(string nume = "nedefinit", double greutate = 0, double varsta = 0, string culoare = "nedfinit", string tip = "M", int nrMatricol = 0,double nrOuaPerLuna=0,bool closca=false):base(nume, greutate, varsta, culoare, tip, nrMatricol)
+        {
+            this.nrOuaPerLuna = nrOuaPerLuna;
+            this.closca = closca;
+        }
+        public Hen(Hen H):base(H.nume, H.greutate, H.varsta, H.culoare, H.tip)
+        {
+            nrOuaPerLuna = H.nrOuaPerLuna;
+            closca = H.closca;
+        }
+        public void CitireLinieHen(string linie)
+        {
+            this.CitireLinie(linie);
+            var dateFisier = linie.Split(",");
+            nrOuaPerLuna = Convert.ToDouble(dateFisier[6]);
+            closca = Convert.ToBoolean(dateFisier[7]);
+        }
+        public string ConversieLaSirPentruFisierHen()
+        {
+            string HenFisier = string.Format("{1}{0}{2}{0}{3}",
+                ",",
+                this.ConversieLaSir_PentruFisier(),
+                nrOuaPerLuna.ToString(),
+                closca.ToString());
+            return HenFisier;
 
+        }
     }
 }
