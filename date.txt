@@ -1,0 +1,4 @@
+1,Geta,3,543,Feminin,Rosu
+2,marinela,4,335,Feminin,Galben
+3,Marinela,4,435,Feminin,Alb
+4,Geta,2,345,Feminin,Rosu

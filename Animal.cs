@@ -7,23 +7,40 @@ using System.Threading.Tasks;
 
 namespace Ferma
 {
+    public enum Culoare
+    {
+            Rosu,
+            Galben,
+            Alb,
+            Negru,
+            Alb_Negru,
+            Rosu_Alb,
+            Maro,
+            Maro_Alb
+
+    }
+    public enum Tip
+    {
+        Masculin,
+        Feminin
+    }
     public class Animal
     {
         public string nume { get; set; }
-        public string culoare { get; set; }
+        public Culoare culoare { get; set; }
         public double greutate { get; set; }
         public double varsta { get; set; }
-        public string tip { get; set; }
+        public Tip tip { get; set; }
         public int nrMatricol { get; set; }
         public Animal()
         {
             nume = "";
             greutate = 0;
             varsta = 0;
-            culoare = "";
-            tip = "";
+            culoare = Culoare.Alb_Negru;
+            tip = Tip.Masculin;
         }
-        public Animal(string nume="nedefinit",double greutate=0,double varsta = 0,string culoare="nedfinit",string tip="M",int nrMatricol=0)
+        public Animal(string nume="nedefinit",double greutate=0,double varsta = 0,Culoare culoare=Culoare.Negru,Tip tip=Tip.Masculin,int nrMatricol=0)
         {
             this.nume = nume;
             this.greutate = greutate;
@@ -41,15 +58,15 @@ namespace Ferma
             tip = A.tip;
             nrMatricol = A.nrMatricol;
         }
-        public void CitireLinie(string linieFisier)
+        public Animal(string linieFisier)
         {
             var dateFisier = linieFisier.Split(",");
             nrMatricol = Convert.ToInt32(dateFisier[0]);
             nume = dateFisier[1];
             varsta = Convert.ToDouble(dateFisier[2]);
             greutate = Convert.ToDouble(dateFisier[3]);
-            tip = dateFisier[4];
-            culoare = dateFisier[5];
+            tip = (Tip)Enum.Parse(typeof(Tip),dateFisier[4]);
+            culoare = (Culoare)Enum.Parse(typeof(Culoare), dateFisier[5]);
         }
         public string ConversieLaSir_PentruFisier()
         {
@@ -83,7 +100,7 @@ namespace Ferma
             gestanta = false;
             nrVitei = 0;
         }
-        public Cow(string nume = "nedefinit", double greutate = 0, double varsta = 0, string culoare = "nedfinit", string tip = "M",int nrMatricol=0, double litriiLapte = 0,bool gestanta=false,int nrVitei=0):base(nume,greutate,varsta,culoare,tip,nrMatricol)
+        public Cow(string nume = "nedefinit", double greutate = 0, double varsta = 0, Culoare culoare=Culoare.Negru, Tip tip = Tip.Masculin,int nrMatricol=0, double litriiLapte = 0,bool gestanta=false,int nrVitei=0):base(nume,greutate,varsta,culoare,tip,nrMatricol)
         {
             this.litriiLapte = litriiLapte;
             this.gestanta = gestanta;
@@ -97,7 +114,6 @@ namespace Ferma
         }
         public void CitireLinieCow(string linie)
         {
-            this.CitireLinie(linie);
             var dateFisier = linie.Split(",");
             litriiLapte = Convert.ToDouble(dateFisier[6]);
             gestanta = Convert.ToBoolean(dateFisier[7]);
@@ -124,7 +140,7 @@ namespace Ferma
             vitezaAlergare = 0;
             poctovit = false;
         }
-        public Horse(string nume = "nedefinit", double greutate = 0, double varsta = 0, string culoare = "nedfinit", string tip = "M", int nrMatricol = 0,double vitezaAlergare=0,bool poctovit=false): base(nume, greutate, varsta, culoare, tip, nrMatricol)
+        public Horse(string nume = "nedefinit", double greutate = 0, double varsta = 0, Culoare culoare =Culoare.Negru, Tip tip = Tip.Masculin, int nrMatricol = 0,double vitezaAlergare=0,bool poctovit=false): base(nume, greutate, varsta, culoare, tip, nrMatricol)
         {
             this.vitezaAlergare = vitezaAlergare;
             this.poctovit = poctovit;
@@ -136,7 +152,6 @@ namespace Ferma
         }
         public void CitireLinieHorse(string linie)
         {
-            this.CitireLinie(linie);
             var dateFisier = linie.Split(",");
             vitezaAlergare = Convert.ToDouble(dateFisier[6]);
             poctovit = Convert.ToBoolean(dateFisier[7]);
@@ -164,7 +179,7 @@ namespace Ferma
             nrOuaPerLuna = 0;
             closca = false;
         }
-        public Hen(string nume = "nedefinit", double greutate = 0, double varsta = 0, string culoare = "nedfinit", string tip = "M", int nrMatricol = 0,double nrOuaPerLuna=0,bool closca=false):base(nume, greutate, varsta, culoare, tip, nrMatricol)
+        public Hen(string nume = "nedefinit", double greutate = 0, double varsta = 0, Culoare culoare=Culoare.Negru, Tip tip = Tip.Masculin, int nrMatricol = 0,double nrOuaPerLuna=0,bool closca=false):base(nume, greutate, varsta, culoare, tip, nrMatricol)
         {
             this.nrOuaPerLuna = nrOuaPerLuna;
             this.closca = closca;
@@ -174,9 +189,8 @@ namespace Ferma
             nrOuaPerLuna = H.nrOuaPerLuna;
             closca = H.closca;
         }
-        public void CitireLinieHen(string linie)
+        public Hen(string linie):base(linie)
         {
-            this.CitireLinie(linie);
             var dateFisier = linie.Split(",");
             nrOuaPerLuna = Convert.ToDouble(dateFisier[6]);
             closca = Convert.ToBoolean(dateFisier[7]);
